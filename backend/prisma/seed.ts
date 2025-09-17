@@ -1,25 +1,77 @@
-import { faker } from '@faker-js/faker';
-import { cats, PrismaClient } from '@prisma/client';
+import { PrismaClient, Subscription, ActionType } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  const data: cats[] = [];
-  for (let i = 1; i <= 50; i++) {
-    data.push({
-      id: i,
-      name: faker.animal.cat(),
-      color: faker.color.human(),
-      weight: faker.number.int({ min: 10, max: 80 }).toString(),
-      eyes_color: faker.color.human(),
-    });
-  }
+  // Catégories
+  const categories = await prisma.categories.createMany({
+    data: [
+      { name: "Technologie" },
+      { name: "Sport" },
+      { name: "Culture" },
+    ],
+    skipDuplicates: true,
+  });
 
-  const cats = await prisma.cats.createMany({ data, skipDuplicates: true });
-  console.log({ cats });
+  // Utilisateurs
+  const users = await prisma.users.createMany({
+    data: [
+      { username: "Alice", email: "alice@example.com", subscription_type: Subscription.subscriber },
+      { username: "Bob", email: "bob@example.com", subscription_type: Subscription.free },
+    ],
+    skipDuplicates: true,
+  });
+
+  // Articles
+  const article1 = await prisma.articles.create({
+    data: {
+      title: "La révolution de l’IA",
+      content: "Un article sur les progrès récents de l’IA...",
+      author: "Rédaction",
+      category: { connect: { category_id: 1 } }, // Technologie
+      highlighted: true,
+    },
+  });
+
+  const article2 = await prisma.articles.create({
+    data: {
+      title: "Victoire de l’équipe nationale",
+      content: "Retour sur un match historique...",
+      author: "Rédaction sport",
+      category: { connect: { category_id: 2 } }, // Sport
+    },
+  });
+
+  // Tags
+  const tagAI = await prisma.tags.create({ data: { name: "IA" } });
+  const tagFootball = await prisma.tags.create({ data: { name: "Football" } });
+
+  // Associer tags aux articles
+  await prisma.articleTags.createMany({
+    data: [
+      { article_id: article1.article_id, tag_id: tagAI.tag_id },
+      { article_id: article2.article_id, tag_id: tagFootball.tag_id },
+    ],
+    skipDuplicates: true,
+  });
+
+  // Actions utilisateurs
+  await prisma.userActions.createMany({
+    data: [
+      { user_id: 1, article_id: article1.article_id, action_type: ActionType.view },
+      { user_id: 1, article_id: article1.article_id, action_type: ActionType.like },
+      { user_id: 2, article_id: article2.article_id, action_type: ActionType.view },
+    ],
+  });
+
+  console.log("✅ Seed terminé !");
 }
 
-main().catch(async (err) => {
-  console.log(err);
-  await prisma.$disconnect();
-  process.exit(1);
-});
+main()
+  .catch(async (err) => {
+    console.error(err);
+    await prisma.$disconnect();
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
