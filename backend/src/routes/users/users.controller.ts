@@ -4,83 +4,83 @@ import { ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import { Authorize } from 'src/decorators/authorize.decorator';
 import { Roles } from 'src/guards/is-authorized/roles';
-import { CatsService } from './cats.service';
-import { CreateCatDto } from './dto/create-cat.dto';
-import { UpdateCatDto } from './dto/update-cat.dto';
-import { Cat } from './entities/cat.entity';
+import { UsersService } from './users.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
 
-@ApiTags('cats')
-@Controller('cats')
-export class CatsController {
-  constructor(private readonly catsService: CatsService) {}
+@ApiTags('users')
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  @ApiOkResponse({ type: Cat })
-  create(@Body() createCatDto: CreateCatDto) {
-    return this.catsService.create(createCatDto);
+  @ApiOkResponse({ type: User })
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
   }
 
   @Post('login')
   @ApiOkResponse()
   login(@Session() session: SessionExpress) {
-    return this.catsService.login(session);
+    return this.usersService.login(session);
   }
 
   @Get()
-  @ApiOkResponse({ type: Cat })
+  @ApiOkResponse({ type: User })
   findAll() {
-    return this.catsService.findAll();
+    return this.usersService.findAll();
   }
 
   @Get('shuffle')
-  @ApiOkResponse({ type: Cat })
+  @ApiOkResponse({ type: User })
   findAllShuffle() {
-    return this.catsService.findAllShuffle();
+    return this.usersService.findAllShuffle();
   }
 
   @Get('asyncForEach')
-  @ApiOkResponse({ type: Cat })
+  @ApiOkResponse({ type: User })
   findAllAsyncForEach() {
-    return this.catsService.findAllAsyncForEach();
+    return this.usersService.findAllAsyncForEach();
   }
 
   @Get('admin')
   @Authorize([Roles.Admin])
   admin() {
-    return this.catsService.admin();
+    return this.usersService.admin();
   }
 
   @Get('crypto')
   crypto() {
-    return this.catsService.crypto();
+    return this.usersService.crypto();
   }
 
   @Post('sendMail')
   sendMail() {
-    return this.catsService.sendMail();
+    return this.usersService.sendMail();
   }
 
   @Get(':id')
-  @ApiOkResponse({ type: Cat })
+  @ApiOkResponse({ type: User })
   findOne(@Param('id') id: string) {
-    return this.catsService.findOne(+id);
+    return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
-  @ApiOkResponse({ type: Cat })
-  update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-    return this.catsService.update(+id, updateCatDto);
+  @ApiOkResponse({ type: User })
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(+id, updateUserDto);
   }
 
   @Delete(':id')
-  @ApiOkResponse({ type: Cat })
+  @ApiOkResponse({ type: User })
   remove(@Param('id') id: string) {
-    return this.catsService.remove(+id);
+    return this.usersService.remove(+id);
   }
 
   @Get('pdfClass/:id')
   async printPDFFromClass(@Param('id') id: string, @Res() res: Response) {
-    const buffer = await this.catsService.printPDFFromClass(+id);
+    const buffer = await this.usersService.printPDFFromClass(+id);
     res.set({
       'Content-Type': 'application/pdf',
       'Content-Disposition': 'attachment; filename=example.pdf',
@@ -92,7 +92,7 @@ export class CatsController {
 
   @Get('pdfTemplate/:id')
   async printPDFFromTemplate(@Param('id') id: string, @Res() res: Response) {
-    const buffer = await this.catsService.printPDFFromTemplate(+id);
+    const buffer = await this.usersService.printPDFFromTemplate(+id);
     res.set({
       'Content-Type': 'application/pdf',
       'Content-Disposition': 'attachment; filename=example.pdf',
