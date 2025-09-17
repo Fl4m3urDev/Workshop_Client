@@ -4,6 +4,7 @@ import ArticleCard from '../components/ArticleCard';
 import FeaturedArticle from '../components/FeaturedArticle';
 
 const PolitiquePage = ({ userData, updateUserData, toggleLike }) => {
+
   const [activeTab, setActiveTab] = useState('actualites');
 
   const featuredArticle = {

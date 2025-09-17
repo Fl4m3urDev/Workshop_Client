@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import PolitiquePage from './pages/PolitiquePage';
@@ -6,13 +7,14 @@ import EconomiePage from './pages/EconomiePage';
 import CulturePage from './pages/CulturePage';
 import SportPage from './pages/SportPage';
 import BretagnePage from './pages/BretagnePage';
+import ArticlePage from './pages/ArticlePage';
 import Footer from './components/Footer';
 import UserDashboard from './components/UserDashboard';
 import './App.css';
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('accueil');
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
+
   const [userData, setUserData] = useState({
     categories: ['culture', 'economie', 'bretagne'],
     likedTags: ['Festival', 'Bretagne', 'Export', 'Art', 'Lorient', 'Cidre'],
@@ -38,10 +40,12 @@ const App = () => {
     
     if (isLiked) {
       newLikes.delete(articleId);
-      // Retirer les tags des préférences (logique simplifiée)
+      updateUserData({ 
+        articleLikes: newLikes,
+        stats: { ...userData.stats, articlesLiked: userData.stats.articlesLiked - 1 }
+      });
     } else {
       newLikes.add(articleId);
-      // Ajouter les nouveaux tags aux préférences
       const newLikedTags = [...userData.likedTags];
       articleTags.forEach(tag => {
         if (!newLikedTags.includes(tag)) {
@@ -53,59 +57,42 @@ const App = () => {
         likedTags: newLikedTags,
         stats: { ...userData.stats, articlesLiked: userData.stats.articlesLiked + 1 }
       });
-      return;
     }
-    
-    updateUserData({ 
-      articleLikes: newLikes,
-      stats: { ...userData.stats, articlesLiked: userData.stats.articlesLiked - 1 }
-    });
   };
 
-  const renderPage = () => {
-    const pageProps = {
-      userData,
-      updateUserData,
-      toggleLike
-    };
-
-    switch(currentPage) {
-      case 'politique':
-        return <PolitiquePage {...pageProps} />;
-      case 'economie':
-        return <EconomiePage {...pageProps} />;
-      case 'culture':
-        return <CulturePage {...pageProps} />;
-      case 'sport':
-        return <SportPage {...pageProps} />;
-      case 'bretagne':
-        return <BretagnePage {...pageProps} />;
-      default:
-        return <HomePage {...pageProps} />;
-    }
+  const pageProps = {
+    userData,
+    updateUserData,
+    toggleLike
   };
 
   return (
-    <div className="app">
-      <Header 
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        setIsDashboardOpen={setIsDashboardOpen}
-      />
-      
-      <main className="main-app-content">
-        {renderPage()}
-      </main>
-      
-      <Footer />
-      
-      <UserDashboard 
-        isOpen={isDashboardOpen}
-        onClose={() => setIsDashboardOpen(false)}
-        userData={userData}
-        updateUserData={updateUserData}
-      />
-    </div>
+    <Router>
+      <div className="app">
+        <Header setIsDashboardOpen={setIsDashboardOpen} />
+        
+        <main className="main-app-content">
+          <Routes>
+            <Route path="/" element={<HomePage {...pageProps} />} />
+            <Route path="/politique" element={<PolitiquePage {...pageProps} />} />
+            <Route path="/economie" element={<EconomiePage {...pageProps} />} />
+            <Route path="/culture" element={<CulturePage {...pageProps} />} />
+            <Route path="/sport" element={<SportPage {...pageProps} />} />
+            <Route path="/bretagne" element={<BretagnePage {...pageProps} />} />
+            <Route path="/article/:id" element={<ArticlePage {...pageProps} />} />
+          </Routes>
+        </main>
+
+        <Footer />
+
+        <UserDashboard 
+          isOpen={isDashboardOpen}
+          onClose={() => setIsDashboardOpen(false)}
+          userData={userData}
+          updateUserData={updateUserData}
+        />
+      </div>
+    </Router>
   );
 };
 

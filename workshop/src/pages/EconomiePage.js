@@ -4,6 +4,7 @@ import ArticleCard from '../components/ArticleCard';
 import FeaturedArticle from '../components/FeaturedArticle';
 
 const EconomiePage = ({ userData, updateUserData, toggleLike }) => {
+
   const [activeTab, setActiveTab] = useState('entreprises');
 
   const featuredArticle = {

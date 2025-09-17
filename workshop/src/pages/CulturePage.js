@@ -4,6 +4,7 @@ import ArticleCard from '../components/ArticleCard';
 import FeaturedArticle from '../components/FeaturedArticle';
 
 const CulturePage = ({ userData, updateUserData, toggleLike }) => {
+
   const [activeTab, setActiveTab] = useState('evenements');
 
   const featuredArticle = {

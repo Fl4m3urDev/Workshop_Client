@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import ArticleCard from '../components/ArticleCard';
 import FeaturedArticle from '../components/FeaturedArticle';
+import { useNavigate } from 'react-router-dom';
 
 const BretagnePage = ({ userData, updateUserData, toggleLike }) => {
   const [activeTab, setActiveTab] = useState('actualites');
+  const navigate = useNavigate();
+
+  const openArticle = (article) => {
+    navigate(`/article/${article.id}`);
+  };
 
   const featuredArticle = {
     id: 'bretagne-featured-1',
@@ -166,6 +172,7 @@ const BretagnePage = ({ userData, updateUserData, toggleLike }) => {
                 article={featuredArticle}
                 onLike={handleLikeToggle}
                 isLiked={userData.articleLikes.has(featuredArticle.id)}
+                onClick={openArticle(featuredArticle)}
               />
               <section className="articles-grid">
                 {articlesData['actualites'].map((article) => (
@@ -174,6 +181,7 @@ const BretagnePage = ({ userData, updateUserData, toggleLike }) => {
                     article={article}
                     onLike={handleLikeToggle}
                     isLiked={userData.articleLikes.has(article.id)}
+                    onClick={openArticle(article)}
                   />
                 ))}
               </section>
@@ -188,6 +196,7 @@ const BretagnePage = ({ userData, updateUserData, toggleLike }) => {
                 article={featuredArticleForTab['territoires']}
                 onLike={handleLikeToggle}
                 isLiked={userData.articleLikes.has(featuredArticleForTab['territoires'].id)}
+                openArticle={() => openArticle(featuredArticleForTab)}
               />
               <section className="articles-grid">
                 {articlesData['territoires'].map((article) => (
@@ -196,6 +205,7 @@ const BretagnePage = ({ userData, updateUserData, toggleLike }) => {
                     article={article}
                     onLike={handleLikeToggle}
                     isLiked={userData.articleLikes.has(article.id)}
+                    openArticle={() => openArticle(article)}
                   />
                 ))}
               </section>
@@ -210,6 +220,7 @@ const BretagnePage = ({ userData, updateUserData, toggleLike }) => {
                 article={featuredArticleForTab['traditions']}
                 onLike={handleLikeToggle}
                 isLiked={userData.articleLikes.has(featuredArticleForTab['traditions'].id)}
+                openArticle={() => openArticle(featuredArticleForTab)}
               />
               <section className="articles-grid">
                 {articlesData['traditions'].map((article) => (
@@ -218,6 +229,7 @@ const BretagnePage = ({ userData, updateUserData, toggleLike }) => {
                     article={article}
                     onLike={handleLikeToggle}
                     isLiked={userData.articleLikes.has(article.id)}
+                    openArticle={() => openArticle(article)}
                   />
                 ))}
               </section>

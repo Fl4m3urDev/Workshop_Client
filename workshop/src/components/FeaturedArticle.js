@@ -1,12 +1,13 @@
 import React from 'react';
 
-const FeaturedArticle = ({ article, onLike, isLiked }) => {
-  const handleLike = () => {
+const FeaturedArticle = ({ article, onLike, isLiked, openArticle }) => {
+  const handleLike = (e) => {
+    e.stopPropagation(); // évite de déclencher le clic sur la carte
     onLike(article.id, article.tags, 0);
   };
 
   return (
-    <article className="featured-article">
+    <article className="featured-article" onClick={() => openArticle(article)} style={{ cursor: 'pointer' }}>
       <div className="featured-image">
         {article.badge && (
           <div className="recommendation-badge">{article.badge}</div>

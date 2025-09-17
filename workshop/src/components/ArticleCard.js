@@ -1,12 +1,25 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ArticleCard = ({ article, onLike, isLiked }) => {
-  const handleLike = () => {
+
+    const navigate = useNavigate(); // <-- hook ici, au début du composant
+
+    const handleClick = () => {
+      navigate(`/article/${article.id}`);
+    };
+
+  const handleLike = (e) => {
+    e.stopPropagation(); // évite de déclencher le clic sur la carte
     onLike(article.id, article.tags, article.likes);
   };
 
   return (
-    <article className="article-card">
+    <article 
+      className="article-card"
+      onClick={handleClick} 
+      style={{ cursor: 'pointer' }}
+    >
       {article.badge && (
         <div className="recommendation-badge">{article.badge}</div>
       )}

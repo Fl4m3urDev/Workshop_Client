@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-const Header = ({ currentPage, setCurrentPage, setIsDashboardOpen }) => {
+const Header = ({ setIsDashboardOpen }) => {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const navigationItems = [
-    { key: 'accueil', label: 'Accueil' },
-    { key: 'politique', label: 'Politique' },
-    { key: 'economie', label: 'Économie' },
-    { key: 'culture', label: 'Culture' },
-    { key: 'sport', label: 'Sport' },
-    { key: 'bretagne', label: 'Bretagne' }
+    { key: 'accueil', label: 'Accueil', path: '/' },
+    { key: 'politique', label: 'Politique', path: '/politique' },
+    { key: 'economie', label: 'Économie', path: '/economie' },
+    { key: 'culture', label: 'Culture', path: '/culture' },
+    { key: 'sport', label: 'Sport', path: '/sport' },
+    { key: 'bretagne', label: 'Bretagne', path: '/bretagne' }
   ];
 
-  const handleNavigation = (pageKey) => {
-    setCurrentPage(pageKey);
+  const handleNavigation = (path) => {
+    navigate(path);
     setIsUserMenuOpen(false);
   };
 
@@ -36,13 +39,12 @@ const Header = ({ currentPage, setCurrentPage, setIsDashboardOpen }) => {
   };
 
   // Fermer le menu si on clique ailleurs
-  React.useEffect(() => {
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (!event.target.closest('.user-profile')) {
         setIsUserMenuOpen(false);
       }
     };
-
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
@@ -50,10 +52,7 @@ const Header = ({ currentPage, setCurrentPage, setIsDashboardOpen }) => {
   return (
     <header className="header">
       <div className="header-top">
-        <div 
-          className="logo" 
-          onClick={() => handleNavigation('accueil')}
-        >
+        <div className="logo" onClick={() => handleNavigation('/')}>
           Bretagne Actualités
         </div>
         <div className="weather-date">
@@ -61,38 +60,36 @@ const Header = ({ currentPage, setCurrentPage, setIsDashboardOpen }) => {
           <div>📅 Mercredi 17 septembre 2025</div>
         </div>
       </div>
-      
+
       <nav className="nav-main">
         <div className="nav-container">
           <ul className="nav-menu">
             {navigationItems.map((item) => (
               <li key={item.key}>
-                <a 
-                  onClick={() => handleNavigation(item.key)}
-                  className={currentPage === item.key ? 'active' : ''}
+                <a
+                  onClick={() => handleNavigation(item.path)}
+                  className={location.pathname === item.path ? 'active' : ''}
                 >
                   {item.label}
                 </a>
               </li>
             ))}
           </ul>
-          
+
           <form className="search-container" onSubmit={handleSearch}>
-            <input 
-              type="text" 
-              className="search-input" 
+            <input
+              type="text"
+              className="search-input"
               placeholder="Rechercher..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button type="submit" className="search-btn">🔍</button>
           </form>
-          
+
           <div className="user-profile">
             <div className="user-dropdown">
-              <div className="user-avatar" onClick={toggleUserMenu}>
-                MJ
-              </div>
+              <div className="user-avatar" onClick={toggleUserMenu}>MJ</div>
               <div className={`user-menu ${isUserMenuOpen ? 'active' : ''}`}>
                 <a onClick={openDashboard}>📊 Mon tableau de bord</a>
                 <a onClick={() => console.log('Articles sauvés')}>📰 Mes articles sauvés</a>

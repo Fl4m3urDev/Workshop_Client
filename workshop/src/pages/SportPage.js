@@ -4,6 +4,7 @@ import ArticleCard from '../components/ArticleCard';
 import FeaturedArticle from '../components/FeaturedArticle';
 
 const SportPage = ({ userData, updateUserData, toggleLike }) => {
+
   const [activeTab, setActiveTab] = useState('football');
 
   const featuredArticle = {
