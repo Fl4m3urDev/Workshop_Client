@@ -1,0 +1,1449 @@
+</footer>
+
+<!-- Modal Tableau de bord utilisateur -->
+<div class="modal-overlay" id="userDashboardModal">
+    <div class="user-dashboard">
+        <div class="dashboard-header">
+            <h2>📊 Mon Tableau de Bord</h2>
+            <button class="close-modal" onclick="closeUserDashboard()">✕</button>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>🎯 Mes Centres d'Intérêt</h3>
+            <p style="color: #6b7280; margin-bottom: 1rem;">Sélectionnez les catégories qui vous intéressent pour personnaliser votre fil d'actualités</p>
+            <div class="categories-grid">
+                <div class="category-card selected" onclick="toggleCategory(this, 'culture')">
+                    <span class="category-icon">🎭</span>
+                    <strong>Culture</strong>
+                </div>
+                <div class="category-card selected" onclick="toggleCategory(this, 'economie')">
+                    <span class="category-icon">💼</span>
+                    <strong>Économie</strong>
+                </div>
+                <div class="category-card" onclick="toggleCategory(this, 'sport')">
+                    <span class="category-icon">⚽</span>
+                    <strong>Sport</strong>
+                </div>
+                <div class="category-card" onclick="toggleCategory(this, 'politique')">
+                    <span class="category-icon">🏛️</span>
+                    <strong>Politique</strong>
+                </div>
+                <div class="category-card selected" onclick="toggleCategory(this, 'bretagne')">
+                    <span class="category-icon">🏴‍☠️</span>
+                    <strong>Bretagne</strong>
+                </div>
+                <div class="category-card" onclick="toggleCategory(this, 'tech')">
+                    <span class="category-icon">💻</span>
+                    <strong>Tech</strong>
+                </div>
+                <div class="category-card" onclick="toggleCategory(this, 'environnement')">
+                    <span class="category-icon">🌱</span>
+                    <strong>Environnement</strong>
+                </div>
+                <div class="category-card" onclick="toggleCategory(this, 'gastronomie')">
+                    <span class="category-icon">🍽️</span>
+                    <strong>Gastronomie</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>❤️ Mes Tags Préférés</h3>
+            <p style="color: #6b7280; margin-bottom: 1rem;">Ces tags sont basés sur les articles que vous avez aimés</p>
+            <div class="liked-tags">
+                <div class="liked-tag">
+                    #Festival
+                    <button class="remove-tag" onclick="removeTag(this)">✕</button>
+                </div>
+                <div class="liked-tag">
+                    #Bretagne
+                    <button class="remove-tag" onclick="removeTag(this)">✕</button>
+                </div>
+                <div class="liked-tag">
+                    #Export
+                    <button class="remove-tag" onclick="removeTag(this)">✕</button>
+                </div>
+                <div class="liked-tag">
+                    #Art
+                    <button class="remove-tag" onclick="removeTag(this)">✕</button>
+                </div>
+                <div class="liked-tag">
+                    #Lorient
+                    <button class="remove-tag" onclick="removeTag(this)">✕</button>
+                </div>
+                <div class="liked-tag">
+                    #Cidre
+                    <button class="remove-tag" onclick="removeTag(this)">✕</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>📊 Vos Statistiques</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;">
+                <div style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #1e40af;">127</div>
+                    <div style="color: #374151;">Articles lus</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fecaca, #fca5a5); padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #dc2626;">43</div>
+                    <div style="color: #374151;">Articles aimés</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #059669;">18</div>
+                    <div style="color: #374151;">Articles partagés</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #fef3c7, #fde68a); padding: 1rem; border-radius: 8px; text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #d97706;">7</div>
+                    <div style="color: #374151;">Jours consécutifs</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h3>🎯 Recommandations Personnalisées</h3>
+            <p style="color: #6b7280;">Basées sur vos centres d'intérêt et vos likes précédents</p>
+            <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>Algorithme actuel :</strong><br>
+                • 40% basé sur vos catégories préférées<br>
+                • 35% basé sur vos tags likés<br>
+                • 15% articles populaires dans vos domaines<br>
+                • 10% découverte de nouveaux sujets
+            </div>
+        </div>
+    </div>
+</div><!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bretagne Actualités - Journal en ligne</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Georgia', serif;
+        line-height: 1.6;
+        background-color: #f8f9fa;
+    }
+
+    /* Header */
+    .header {
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+        color: white;
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .logo {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #fff;
+        text-decoration: none;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .weather-date {
+        display: flex;
+        gap: 2rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-main {
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(10px);
+        margin-top: 1rem;
+    }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2rem;
+    }
+
+    .nav-menu {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+    }
+
+    .nav-menu a {
+        color: white;
+        text-decoration: none;
+        padding: 1rem 0;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .nav-menu a:hover {
+        color: #fbbf24;
+        transform: translateY(-2px);
+    }
+
+    .nav-menu a:hover::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #fbbf24;
+        border-radius: 2px;
+    }
+
+    /* User Profile */
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-left: 2rem;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .user-avatar:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(251, 191, 36, 0.4);
+    }
+
+    .user-dropdown {
+        position: relative;
+    }
+
+    .user-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        padding: 1rem 0;
+        min-width: 200px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+
+    .user-menu.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .user-menu a {
+        display: block;
+        padding: 0.75rem 1.5rem;
+        color: #374151;
+        text-decoration: none;
+        transition: background 0.3s ease;
+    }
+
+    .user-menu a:hover {
+        background: #f3f4f6;
+    }
+
+    .search-container {
+        position: relative;
+    }
+
+    .search-input {
+        padding: 0.7rem 2.5rem 0.7rem 1rem;
+        border: none;
+        border-radius: 25px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        backdrop-filter: blur(10px);
+        width: 250px;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        background: rgba(255,255,255,0.3);
+        width: 300px;
+    }
+
+    .search-input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+
+    .search-btn {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+    /* Container principal */
+    .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 2rem;
+    }
+
+    /* Sections de recommandation */
+    .recommendation-tabs {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .tab-button {
+        background: none;
+        border: none;
+        padding: 1rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #6b7280;
+        cursor: pointer;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .tab-button.active {
+        color: #3b82f6;
+    }
+
+    .tab-button.active::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #3b82f6;
+        border-radius: 2px;
+    }
+
+    .tab-content {
+        display: none;
+    }
+
+    .tab-content.active {
+        display: block;
+    }
+
+    /* Article avec tags et like */
+    .article-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.5rem 0;
+    }
+
+    .tag {
+        background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+        color: #3730a3;
+        padding: 0.25rem 0.75rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+        background: linear-gradient(135deg, #c7d2fe, #a5b4fc);
+        transform: scale(1.05);
+    }
+
+    .article-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .like-button {
+        background: none;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #6b7280;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .like-button:hover, .like-button.liked {
+        color: #ef4444;
+        transform: scale(1.05);
+    }
+
+    .recommendation-badge {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    /* User Dashboard Modal */
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .user-dashboard {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        max-width: 800px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        transform: scale(0.9);
+        transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active .user-dashboard {
+        transform: scale(1);
+    }
+
+    .dashboard-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #e5e7eb;
+    }
+
+    .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #6b7280;
+        transition: color 0.3s ease;
+    }
+
+    .close-modal:hover {
+        color: #ef4444;
+    }
+
+    .dashboard-section {
+        margin-bottom: 2rem;
+    }
+
+    .dashboard-section h3 {
+        color: #1f2937;
+        margin-bottom: 1rem;
+        font-size: 1.3rem;
+    }
+
+    .categories-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .category-card {
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+    }
+
+    .category-card.selected {
+        border-color: #3b82f6;
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+    }
+
+    .category-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .category-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .liked-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .liked-tag {
+        background: linear-gradient(135deg, #fef3c7, #fde68a);
+        color: #92400e;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 500;
+    }
+
+    .remove-tag {
+        background: none;
+        border: none;
+        color: #92400e;
+        cursor: pointer;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .remove-tag:hover {
+        color: #ef4444;
+    }
+
+    /* Section principale */
+    .main-content {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+
+    /* Article principal */
+    .featured-article {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .featured-image {
+        width: 100%;
+        height: 400px;
+        background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+        position: relative;
+    }
+
+    .featured-image::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100px;
+        background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    }
+
+    .featured-content {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem;
+        color: white;
+        z-index: 10;
+    }
+
+    .featured-title {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .featured-excerpt {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .meta-info {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Articles secondaires */
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+        padding: 2rem;
+    }
+
+    .article-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    .article-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .article-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(45deg, #ff9a9e 0%, #fecfef 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+
+    .article-content {
+        padding: 1.5rem;
+    }
+
+    .article-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.5rem;
+        color: #1f2937;
+        line-height: 1.4;
+    }
+
+    .article-excerpt {
+        color: #6b7280;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .article-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #9ca3af;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .widget {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .widget-title {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+        color: #1f2937;
+        border-bottom: 3px solid #3b82f6;
+        padding-bottom: 0.5rem;
+    }
+
+    .trending-list {
+        list-style: none;
+    }
+
+    .trending-item {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e5e7eb;
+        transition: all 0.3s ease;
+    }
+
+    .trending-item:hover {
+        background: linear-gradient(90deg, rgba(59,130,246,0.05), transparent);
+        transform: translateX(5px);
+    }
+
+    .trending-item:last-child {
+        border-bottom: none;
+    }
+
+    .trending-link {
+        text-decoration: none;
+        color: #374151;
+        font-weight: 500;
+        display: block;
+    }
+
+    .trending-meta {
+        font-size: 0.8rem;
+        color: #9ca3af;
+        margin-top: 0.25rem;
+    }
+
+    /* Newsletter */
+    .newsletter-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .newsletter-input {
+        padding: 0.75rem;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    .newsletter-input:focus {
+        outline: none;
+        border-color: #3b82f6;
+    }
+
+    .newsletter-btn {
+        background: linear-gradient(135deg, #3b82f6, #1e40af);
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .newsletter-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(59,130,246,0.4);
+    }
+
+    /* Footer */
+    .footer {
+        background: linear-gradient(135deg, #1f2937, #374151);
+        color: white;
+        padding: 3rem 0 1rem;
+        margin-top: 4rem;
+    }
+
+    .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .footer-section h3 {
+        margin-bottom: 1rem;
+        color: #fbbf24;
+    }
+
+    .footer-section ul {
+        list-style: none;
+    }
+
+    .footer-section li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-section a {
+        color: #d1d5db;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer-section a:hover {
+        color: #fbbf24;
+    }
+
+    .footer-bottom {
+        border-top: 1px solid #4b5563;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        text-align: center;
+        color: #9ca3af;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .container {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+        }
+        
+        .header-top {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .nav-menu {
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-input {
+            width: 200px;
+        }
+        
+        .featured-title {
+            font-size: 1.5rem;
+        }
+        
+        .articles-grid {
+            grid-template-columns: 1fr;
+            padding: 1rem;
+        }
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .article-card {
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .widget {
+        animation: fadeInUp 0.8s ease-out;
+    }
+</style>
+</head>
+<body>
+<!-- Header -->
+<header class="header">
+    <div class="header-top">
+        <a href="#" class="logo">Bretagne Actualités</a>
+        <div class="weather-date">
+            <div>🌤️ Rennes 18°C</div>
+            <div>📅 Mercredi 17 septembre 2025</div>
+        </div>
+    </div>
+    <nav class="nav-main">
+        <div class="nav-container">
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('accueil')">Accueil</a></li>
+                <li><a href="#" onclick="showPage('politique')">Politique</a></li>
+                <li><a href="#" onclick="showPage('economie')">Économie</a></li>
+                <li><a href="#" onclick="showPage('culture')">Culture</a></li>
+                <li><a href="#" onclick="showPage('sport')">Sport</a></li>
+                <li><a href="#" onclick="showPage('bretagne')">Bretagne</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Rechercher...">
+                <button class="search-btn">🔍</button>
+            </div>
+            <div class="user-profile">
+                <div class="user-dropdown">
+                    <div class="user-avatar" onclick="toggleUserMenu()">MJ</div>
+                    <div class="user-menu" id="userMenu">
+                        <a href="#" onclick="openUserDashboard()">📊 Mon tableau de bord</a>
+                        <a href="#">📰 Mes articles sauvés</a>
+                        <a href="#">⚙️ Paramètres</a>
+                        <a href="#">🚪 Déconnexion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Contenu principal -->
+<div class="container">
+    <main class="main-content">
+        <!-- Onglets de recommandation -->
+        <div class="recommendation-tabs">
+            <button class="tab-button active" onclick="showTab('pour-vous')">🎯 Pour vous</button>
+            <button class="tab-button" onclick="showTab('decouvrir')">🔍 Découvrir</button>
+            <button class="tab-button" onclick="showTab('actualites')">📰 Toutes les actualités</button>
+        </div>
+
+        <!-- Section Pour Vous -->
+        <div id="pour-vous" class="tab-content active">
+            <!-- Article principal personnalisé -->
+            <article class="featured-article">
+                <div class="featured-image">
+                    <div class="recommendation-badge">Recommandé pour vous</div>
+                    📸 Image à la une
+                    <div class="featured-content">
+                        <h1 class="featured-title">Le festival de Lorient bat tous les records de fréquentation</h1>
+                        <div class="article-tags">
+                            <span class="tag">#Culture</span>
+                            <span class="tag">#Bretagne</span>
+                            <span class="tag">#Festival</span>
+                            <span class="tag">#Lorient</span>
+                        </div>
+                        <p class="featured-excerpt">Plus de 750 000 visiteurs ont participé au Festival Interceltique de Lorient cette année, établissant un nouveau record historique pour l'événement breton.</p>
+                        <div class="meta-info">
+                            <span>📅 Il y a 2 heures</span>
+                            <span>👤 Marie Dupont</span>
+                            <span>💬 24 commentaires</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Articles personnalisés -->
+            <section class="articles-grid">
+                <article class="article-card">
+                    <div class="recommendation-badge">🎯 Basé sur vos goûts</div>
+                    <div class="article-image">📸 Image</div>
+                    <div class="article-content">
+                        <h2 class="article-title">Les producteurs de cidre bretons s'exportent en Asie</h2>
+                        <div class="article-tags">
+                            <span class="tag">#Économie</span>
+                            <span class="tag">#Bretagne</span>
+                            <span class="tag">#Export</span>
+                            <span class="tag">#Cidre</span>
+                        </div>
+                        <p class="article-excerpt">Le cidre breton conquiert de nouveaux marchés internationaux, notamment au Japon et en Corée du Sud, portant l'économie locale.</p>
+                        <div class="article-actions">
+                            <div class="article-meta">
+                                <span>📅 Il y a 6 heures</span>
+                                <span>💬 12 commentaires</span>
+                            </div>
+                            <button class="like-button" onclick="toggleLike(this, ['Économie', 'Bretagne', 'Export', 'Cidre'])">
+                                ❤️ <span class="like-count">23</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="recommendation-badge">📈 Tendance dans Culture</div>
+                    <div class="article-image">📸 Image</div>
+                    <div class="article-content">
+                        <h2 class="article-title">Nouveau musée d'art contemporain à Nantes</h2>
+                        <div class="article-tags">
+                            <span class="tag">#Culture</span>
+                            <span class="tag">#Art</span>
+                            <span class="tag">#Nantes</span>
+                            <span class="tag">#Musée</span>
+                        </div>
+                        <p class="article-excerpt">Un espace de 3000m² dédié à l'art contemporain ouvrira ses portes au printemps 2026 dans le quartier de la Création.</p>
+                        <div class="article-actions">
+                            <div class="article-meta">
+                                <span>📅 Il y a 1 jour</span>
+                                <span>💬 8 commentaires</span>
+                            </div>
+                            <button class="like-button" onclick="toggleLike(this, ['Culture', 'Art', 'Nantes', 'Musée'])">
+                                ❤️ <span class="like-count">15</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+
+        <!-- Section Découvrir -->
+        <div id="decouvrir" class="tab-content">
+            <section class="articles-grid">
+                <article class="article-card">
+                    <div class="recommendation-badge">🆕 Nouveau pour vous</div>
+                    <div class="article-image">📸 Image</div>
+                    <div class="article-content">
+                        <h2 class="article-title">La startup brestoise révolutionne l'éolien offshore</h2>
+                        <div class="article-tags">
+                            <span class="tag">#Innovation</span>
+                            <span class="tag">#Énergie</span>
+                            <span class="tag">#Brest</span>
+                            <span class="tag">#Startup</span>
+                        </div>
+                        <p class="article-excerpt">Une jeune entreprise bretonne développe une technologie révolutionnaire pour optimiser le rendement des éoliennes en mer.</p>
+                        <div class="article-actions">
+                            <div class="article-meta">
+                                <span>📅 Il y a 4 heures</span>
+                                <span>💬 18 commentaires</span>
+                            </div>
+                            <button class="like-button" onclick="toggleLike(this, ['Innovation', 'Énergie', 'Brest', 'Startup'])">
+                                ❤️ <span class="like-count">42</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="recommendation-badge">🌟 Populaire aujourd'hui</div>
+                    <div class="article-image">📸 Image</div>
+                    <div class="article-content">
+                        <h2 class="article-title">Les secrets culinaires du chef étoilé vannetais</h2>
+                        <div class="article-tags">
+                            <span class="tag">#Gastronomie</span>
+                            <span class="tag">#Chef</span>
+                            <span class="tag">#Vannes</span>
+                            <span class="tag">#Michelin</span>
+                        </div>
+                        <p class="article-excerpt">Portrait d'un chef qui revisite la cuisine traditionnelle bretonne avec une approche moderne et créative.</p>
+                        <div class="article-actions">
+                            <div class="article-meta">
+                                <span>📅 Il y a 2 heures</span>
+                                <span>💬 35 commentaires</span>
+                            </div>
+                            <button class="like-button" onclick="toggleLike(this, ['Gastronomie', 'Chef', 'Vannes', 'Michelin'])">
+                                ❤️ <span class="like-count">67</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+
+        <!-- Section Toutes les actualités -->
+        <div id="actualites" class="tab-content">
+            <!-- Article principal -->
+            <article class="featured-article">
+                <div class="featured-image">
+                    📸 Image à la une
+                    <div class="featured-content">
+                        <h1 class="featured-title">Nouvelle ligne TGV vers la Bretagne annoncée</h1>
+                        <div class="article-tags">
+                            <span class="tag">#Transport</span>
+                            <span class="tag">#TGV</span>
+                            <span class="tag">#Infrastructure</span>
+                        </div>
+                        <p class="featured-excerpt">Le gouvernement dévoile son plan pour améliorer les liaisons ferroviaires entre Paris et la Bretagne avec une nouvelle ligne à grande vitesse.</p>
+                        <div class="meta-info">
+                            <span>📅 Il y a 4 heures</span>
+                            <span>👤 Jean Martin</span>
+                            <span>💬 156 commentaires</span>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Articles généraux -->
+            <section class="articles-grid">
+                <article class="article-card">
+                    <div class="article-image">📸 Image</div>
+                    <div class="article-content">
+                        <h2 class="article-title">Tempête Céline : vigilance orange maintenue</h2>
+                        <div class="article-tags">
+                            <span class="tag">#Météo</span>
+                            <span class="tag">#Alerte</span>
+                            <span class="tag">#Bretagne</span>
+                        </div>
+                        <p class="article-excerpt">Météo-France maintient la vigilance orange pour les départements côtiers bretons avec des vents pouvant atteindre 120 km/h.</p>
+                        <div class="article-actions">
+                            <div class="article-meta">
+                                <span>📅 Il y a 1 heure</span>
+                                <span>💬 8 commentaires</span>
+                            </div>
+                            <button class="like-button" onclick="toggleLike(this, ['Météo', 'Alerte', 'Bretagne'])">
+                                ❤️ <span class="like-count">12</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="article-card">
+                    <div class="article-image">📸 Image</div>
+                    <div class="article-content">
+                        <h2 class="article-title">Rennes Métropole investit dans le vélo électrique</h2>
+                        <div class="article-tags">
+                            <span class="tag">#Transport</span>
+                            <span class="tag">#Vélo</span>
+                            <span class="tag">#Rennes</span>
+                            <span class="tag">#Écologie</span>
+                        </div>
+                        <p class="article-excerpt">Un nouveau réseau de bornes de recharge pour vélos électriques sera déployé dans toute la métropole rennaise d'ici fin 2025.</p>
+                        <div class="article-actions">
+                            <div class="article-meta">
+                                <span>📅 Il y a 8 heures</span>
+                                <span>💬 15 commentaires</span>
+                            </div>
+                            <button class="like-button" onclick="toggleLike(this, ['Transport', 'Vélo', 'Rennes', 'Écologie'])">
+                                ❤️ <span class="like-count">28</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <!-- Tendances -->
+        <div class="widget">
+            <h3 class="widget-title">🔥 Tendances</h3>
+            <ul class="trending-list">
+                <li class="trending-item">
+                    <a href="#" class="trending-link">Les algues vertes reviennent sur les côtes finistériennes</a>
+                    <div class="trending-meta">📅 Il y a 3 heures • 👁️ 1,2k vues</div>
+                </li>
+                <li class="trending-item">
+                    <a href="#" class="trending-link">Le Stade Rennais recrute un nouvel attaquant</a>
+                    <div class="trending-meta">📅 Il y a 5 heures • 👁️ 850 vues</div>
+                </li>
+                <li class="trending-item">
+                    <a href="#" class="trending-link">Ouverture d'un nouveau campus tech à Nantes</a>
+                    <div class="trending-meta">📅 Il y a 1 jour • 👁️ 600 vues</div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="widget">
+            <h3 class="widget-title">📧 Newsletter</h3>
+            <p>Recevez les actualités bretonnes directement dans votre boîte mail</p>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Votre email">
+                <button type="submit" class="newsletter-btn">S'abonner</button>
+            </form>
+        </div>
+
+        <!-- Météo -->
+        <div class="widget">
+            <h3 class="widget-title">🌤️ Météo Bretagne</h3>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; text-align: center;">
+                <div>
+                    <strong>Rennes</strong><br>
+                    ☁️ 18°C
+                </div>
+                <div>
+                    <strong>Brest</strong><br>
+                    🌧️ 15°C
+                </div>
+                <div>
+                    <strong>Lorient</strong><br>
+                    ⛅ 17°C
+                </div>
+                <div>
+                    <strong>Saint-Malo</strong><br>
+                    ☀️ 19°C
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Bretagne Actualités</h3>
+            <ul>
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Équipe rédactionnelle</a></li>
+                <li><a href="#">Archives</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Rubriques</h3>
+            <ul>
+                <li><a href="#">Politique</a></li>
+                <li><a href="#">Économie</a></li>
+                <li><a href="#">Culture</a></li>
+                <li><a href="#">Sport</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Services</h3>
+            <ul>
+                <li><a href="#">Newsletter</a></li>
+                <li><a href="#">Application mobile</a></li>
+                <li><a href="#">Flux RSS</a></li>
+                <li><a href="#">Widgets</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Suivez-nous</h3>
+            <ul>
+                <li><a href="#">📘 Facebook</a></li>
+                <li><a href="#">🐦 Twitter</a></li>
+                <li><a href="#">📸 Instagram</a></li>
+                <li><a href="#">🎬 YouTube</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 Bretagne Actualités - Tous droits réservés | <a href="#">Mentions légales</a> | <a href="#">Politique de confidentialité</a></p>
+    </div>
+</footer>
+
+<script>
+    // Données utilisateur simulées
+    let userData = {
+        categories: ['culture', 'economie', 'bretagne'],
+        likedTags: ['Festival', 'Bretagne', 'Export', 'Art', 'Lorient', 'Cidre'],
+        articleLikes: new Set()
+    };
+
+    // Gestion du menu utilisateur
+    function toggleUserMenu() {
+        const menu = document.getElementById('userMenu');
+        menu.classList.toggle('active');
+    }
+
+    // Fermer le menu si on clique ailleurs
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.user-profile')) {
+            document.getElementById('userMenu').classList.remove('active');
+        }
+    });
+
+    // Gestion du tableau de bord
+    function openUserDashboard() {
+        document.getElementById('userDashboardModal').classList.add('active');
+        document.getElementById('userMenu').classList.remove('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeUserDashboard() {
+        document.getElementById('userDashboardModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    // Gestion des onglets
+    function showTab(tabName) {
+        // Masquer tous les contenus
+        document.querySelectorAll('.tab-content').forEach(content => {
+            content.classList.remove('active');
+        });
+        
+        // Désactiver tous les boutons
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.classList.remove('active');
+        });
+        
+        // Activer le contenu et bouton sélectionnés
+        document.getElementById(tabName).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    // Gestion des catégories
+    function toggleCategory(element, category) {
+        element.classList.toggle('selected');
+        
+        if (userData.categories.includes(category)) {
+            userData.categories = userData.categories.filter(c => c !== category);
+        } else {
+            userData.categories.push(category);
+        }
+        
+        console.log('Catégories mises à jour:', userData.categories);
+        updateRecommendations();
+    }
+
+    // Gestion des likes d'articles
+    function toggleLike(button, articleTags) {
+        const isLiked = button.classList.contains('liked');
+        const likeCount = button.querySelector('.like-count');
+        let count = parseInt(likeCount.textContent);
+        
+        if (isLiked) {
+            button.classList.remove('liked');
+            likeCount.textContent = count - 1;
+            
+            // Retirer les tags des préférences
+            articleTags.forEach(tag => {
+                const tagIndex = userData.likedTags.indexOf(tag);
+                if (tagIndex > -1) {
+                    userData.likedTags.splice(tagIndex, 1);
+                }
+            });
+        } else {
+            button.classList.add('liked');
+            likeCount.textContent = count + 1;
+            
+            // Ajouter les nouveaux tags aux préférences
+            articleTags.forEach(tag => {
+                if (!userData.likedTags.includes(tag)) {
+                    userData.likedTags.push(tag);
+                }
+            });
+        }
+        
+        console.log('Tags préférés mis à jour:', userData.likedTags);
+        updateUserDashboard();
+        updateRecommendations();
+    }
+
+    // Retirer un tag des préférences
+    function removeTag(button) {
+        const tagElement = button.parentElement;
+        const tagName = tagElement.textContent.replace('✕', '').trim().replace('#', '');
+        
+        userData.likedTags = userData.likedTags.filter(tag => tag !== tagName);
+        tagElement.remove();
+        
+        console.log('Tag retiré:', tagName);
+        updateRecommendations();
+    }
+
+    // Mise à jour du tableau de bord
+    function updateUserDashboard() {
+        const likedTagsContainer = document.querySelector('.liked-tags');
+        likedTagsContainer.innerHTML = '';
+        
+        userData.likedTags.forEach(tag => {
+            const tagElement = document.createElement('div');
+            tagElement.className = 'liked-tag';
+            tagElement.innerHTML = `
+                #${tag}
+                <button class="remove-tag" onclick="removeTag(this)">✕</button>
+            `;
+            likedTagsContainer.appendChild(tagElement);
+        });
+    }
+
+    // Algorithme de recommandation simplifié
+    function updateRecommendations() {
+        console.log('Mise à jour des recommandations basée sur:');
+        console.log('- Catégories:', userData.categories);
+        console.log('- Tags préférés:', userData.likedTags);
+        
+        // Ici, vous pourriez implémenter un vrai algorithme de recommandation
+        // qui filtrerait et ordonnerait les articles selon les préférences
+        showRecommendationToast();
+    }
+
+    // Toast de notification
+    function showRecommendationToast() {
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 3000;
+            animation: slideIn 0.3s ease-out;
+        `;
+        toast.textContent = '✨ Recommandations mises à jour !';
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.animation = 'slideOut 0.3s ease-in';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
+
+    // Simulation de navigation dynamique
+    function showPage(page) {
+        console.log('Navigation vers:', page);
+        alert('Navigation vers la page: ' + page);
+    }
+
+    // Animation au scroll
+    window.addEventListener('scroll', () => {
+        const articles = document.querySelectorAll('.article-card');
+        articles.forEach(article => {
+            const rect = article.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                article.style.opacity = '1';
+                article.style.transform = 'translateY(0)';
+            }
+        });
+    });
+
+    // Effet de recherche
+    const searchInput = document.querySelector('.search-input');
+    searchInput.addEventListener('focus', () => {
+        searchInput.style.transform = 'scale(1.05)';
+    });
+
+    searchInput.addEventListener('blur', () => {
+        searchInput.style.transform = 'scale(1)';
+    });
+
+    // Newsletter
+    const newsletterForm = document.querySelector('.newsletter-form');
+    newsletterForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.querySelector('.newsletter-input').value;
+        if (email) {
+            alert('Merci pour votre inscription à la newsletter !');
+            document.querySelector('.newsletter-input').value = '';
+        }
+    });
+
+    // Animations CSS supplémentaires
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+        console.log('Application initialisée');
+        console.log('Données utilisateur:', userData);
+    });
+</script>
+</body>
+</html>
