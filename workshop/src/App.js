@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
-//import PolitiquePage from './pages/PolitiquePage';
-//import EconomiePage from './pages/EconomiePage';
-//import CulturePage from './pages/CulturePage';
-//import SportPage from './pages/SportPage';
-//import BretagnePage from './pages/BretagnePage';
+import PolitiquePage from './pages/PolitiquePage';
+import EconomiePage from './pages/EconomiePage';
+import CulturePage from './pages/CulturePage';
+import SportPage from './pages/SportPage';
+import BretagnePage from './pages/BretagnePage';
 import Footer from './components/Footer';
 import UserDashboard from './components/UserDashboard';
 import './App.css';
@@ -71,15 +71,15 @@ const App = () => {
 
     switch(currentPage) {
       case 'politique':
-        //return <PolitiquePage {...pageProps} />;
+        return <PolitiquePage {...pageProps} />;
       case 'economie':
-        //return <EconomiePage {...pageProps} />;
+        return <EconomiePage {...pageProps} />;
       case 'culture':
-        //return <CulturePage {...pageProps} />;
+        return <CulturePage {...pageProps} />;
       case 'sport':
-        //return <SportPage {...pageProps} />;
+        return <SportPage {...pageProps} />;
       case 'bretagne':
-        //return <BretagnePage {...pageProps} />;
+        return <BretagnePage {...pageProps} />;
       default:
         return <HomePage {...pageProps} />;
     }
