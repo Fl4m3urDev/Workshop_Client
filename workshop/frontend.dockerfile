@@ -3,10 +3,10 @@ FROM node:22.19-slim
 
 WORKDIR /app
 
-COPY frontend/package*.json ./
+COPY ../workshop/package*.json ./
 RUN npm install
 
-COPY frontend ./
+COPY ../workshop ./
 
 # Exposer le port Vite/CRA
 EXPOSE 4200

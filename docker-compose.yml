@@ -13,12 +13,12 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
   backend:
     build:
       context: .
-      dockerfile: docker/backend.dockerfile
+      dockerfile: backend/backend.dockerfile
     container_name: nest_backend
     restart: always
     environment:
@@ -38,7 +38,7 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: docker/frontend.dockerfile
+      dockerfile: workshop/frontend.dockerfile
     container_name: react_frontend
     restart: always
     ports:
