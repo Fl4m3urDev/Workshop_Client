@@ -13,41 +13,51 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/dump.sql:/docker-entrypoint-initdb.d/dump.sql
 
   backend:
     build:
-      context: .
-      dockerfile: backend/backend.dockerfile
+      context: ./backend      # contexte de build : backend
+      dockerfile: backend.dockerfile  # Dockerfile à l'intérieur de ./backend
     container_name: nest_backend
-    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app        # hot reload
+      - /app/node_modules
     environment:
       DATABASE_HOST: mysql
       DATABASE_PORT: 3306
       DATABASE_USER: projetuser
       DATABASE_PASSWORD: projetpass
       DATABASE_NAME: projetdb
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     depends_on:
       - mysql
 
   frontend:
     build:
-      context: .
-      dockerfile: workshop/frontend.dockerfile
+      context: ./workshop     # contexte de build : workshop
+      dockerfile: frontend.dockerfile
     container_name: react_frontend
-    restart: always
     ports:
       - "4200:4200"
     volumes:
-      - ./frontend:/app
+      - ./workshop:/app       # hot reload
       - /app/node_modules
     depends_on:
       - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
 
 volumes:
   mysql_data:
