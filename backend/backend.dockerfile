@@ -1,20 +1,17 @@
-# backend/Dockerfile
+# docker/backend.Dockerfile
 FROM node:22.19-slim
 
-# Dossier de travail dans le conteneur
 WORKDIR /app
 
-# Copier package.json et package-lock.json
-COPY package*.json ./
-
 # Installer les dépendances
-RUN npm install
+COPY backend/package*.json ./
+RUN npm install && npx prisma generate
 
-# Copier le reste du backend
-COPY . .
+# Copier tout le backend
+COPY backend ./
 
 # Exposer le port Nest
 EXPOSE 3000
 
-# Lancer en dev
+# Lancer en mode dev (hot reload)
 CMD ["npm", "run", "start:dev"]
