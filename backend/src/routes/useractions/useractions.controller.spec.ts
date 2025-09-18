@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserInterestsController } from './userinterests.controller';
-import { UserInterestsService } from './userinterests.service';
+import { UserActionsController } from './useractions.controller';
+import { UserActionsService } from './useractions.service';
 
-describe('UserInterestsController', () => {
-  let controller: UserInterestsController;
-  let service: UserInterestsService;
+describe('UserActionsController', () => {
+  let controller: UserActionsController;
+  let service: UserActionsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UserInterestsController],
+      controllers: [UserActionsController],
       providers: [
         {
-          provide: UserInterestsService,
+          provide: UserActionsService,
           useValue: {
             create: jest.fn(),
             findAll: jest.fn(),
@@ -23,8 +23,8 @@ describe('UserInterestsController', () => {
       ],
     }).compile();
 
-    controller = module.get<UserInterestsController>(UserInterestsController);
-    service = module.get<UserInterestsService>(UserInterestsService);
+    controller = module.get<UserActionsController>(UserActionsController);
+    service = module.get<UserActionsService>(UserActionsService);
   });
 
   it('should be defined', () => {
@@ -32,8 +32,8 @@ describe('UserInterestsController', () => {
   });
 
   it('create should call service.create', async () => {
-    const dto = { user_id: 1, category_id: 2 };
-    await controller.create(dto);
+    const dto = { user_id: 1, article_id: 2, action_type: 'view' };
+    await controller.create(dto as any);
     expect(service.create).toHaveBeenCalledWith(dto);
   });
 });
