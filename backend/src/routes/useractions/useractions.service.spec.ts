@@ -1,19 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserInterestsService } from './userinterests.service';
+import { UserActionsService } from './useractions.service';
 import { PrismaService } from '../../prisma.service';
 
-describe('UserInterestsService', () => {
-  let service: UserInterestsService;
+describe('UserActionsService', () => {
+  let service: UserActionsService;
   let prisma: PrismaService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UserInterestsService,
+        UserActionsService,
         {
           provide: PrismaService,
           useValue: {
-            userInterests: {
+            userActions: {
               create: jest.fn(),
               findMany: jest.fn(),
               findUnique: jest.fn(),
@@ -25,7 +25,7 @@ describe('UserInterestsService', () => {
       ],
     }).compile();
 
-    service = module.get<UserInterestsService>(UserInterestsService);
+    service = module.get<UserActionsService>(UserActionsService);
     prisma = module.get<PrismaService>(PrismaService);
   });
 
@@ -33,9 +33,9 @@ describe('UserInterestsService', () => {
     expect(service).toBeDefined();
   });
 
-  it('create should call prisma.userInterests.create', async () => {
-    const dto = { user_id: 1, category_id: 2 };
-    await service.create(dto);
-    expect(prisma.userInterests.create).toHaveBeenCalledWith({ data: dto });
+  it('create should call prisma.userActions.create', async () => {
+    const dto = { user_id: 1, article_id: 2, action_type: 'like' };
+    await service.create(dto as any);
+    expect(prisma.userActions.create).toHaveBeenCalledWith({ data: dto });
   });
 });
