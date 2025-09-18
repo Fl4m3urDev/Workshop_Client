@@ -15,8 +15,8 @@ async function main() {
   // Utilisateurs
   const users = await prisma.users.createMany({
     data: [
-      { username: "Alice", email: "alice@example.com", subscription_type: Subscription.subscriber },
-      { username: "Bob", email: "bob@example.com", subscription_type: Subscription.free },
+      { username: "Alice", email: "alice@example.com", password: "jeanjean", subscription_type: Subscription.subscriber },
+      { username: "Bob", email: "bob@example.com", password: "DorImaM3no", subscription_type: Subscription.free },
     ],
     skipDuplicates: true,
   });

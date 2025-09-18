@@ -22,8 +22,12 @@ export class UsersController {
 
   @Post('login')
   @ApiOkResponse()
-  login(@Session() session: SessionExpress) {
-    return this.usersService.login(session);
+  async login(
+    @Session() session: SessionExpress,
+    @Body('email') email: string,
+    @Body('password') password: string
+  ) {
+    return this.usersService.login(session, email, password);
   }
 
   @Get()
@@ -37,12 +41,6 @@ export class UsersController {
   findAllAsyncForEach() {
     return this.usersService.findAllAsyncForEach();
   }
-
-  // @Get('admin')
-  // @Authorize([Roles.Admin])
-  // admin() {
-  //   return this.usersService.admin();
-  // }
 
   @Get('crypto')
   crypto() {

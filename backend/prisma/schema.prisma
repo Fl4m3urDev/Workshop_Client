@@ -12,6 +12,7 @@ model Users {
   user_id           Int             @id @default(autoincrement())
   username          String          @db.VarChar(100)
   email             String?         @unique @db.VarChar(150)
+  password          String          @db.VarChar(150)
   subscription_type Subscription    @default(free)
   created_at        DateTime        @default(now())
 
