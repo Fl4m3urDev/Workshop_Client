@@ -32,23 +32,17 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get('shuffle')
-  @ApiOkResponse({ type: User })
-  findAllShuffle() {
-    return this.usersService.findAllShuffle();
-  }
-
   @Get('asyncForEach')
   @ApiOkResponse({ type: User })
   findAllAsyncForEach() {
     return this.usersService.findAllAsyncForEach();
   }
 
-  @Get('admin')
-  @Authorize([Roles.Admin])
-  admin() {
-    return this.usersService.admin();
-  }
+  // @Get('admin')
+  // @Authorize([Roles.Admin])
+  // admin() {
+  //   return this.usersService.admin();
+  // }
 
   @Get('crypto')
   crypto() {
@@ -76,29 +70,5 @@ export class UsersController {
   @ApiOkResponse({ type: User })
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
-  }
-
-  @Get('pdfClass/:id')
-  async printPDFFromClass(@Param('id') id: string, @Res() res: Response) {
-    const buffer = await this.usersService.printPDFFromClass(+id);
-    res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename=example.pdf',
-      'Content-Length': buffer.length,
-    });
-
-    res.end(buffer);
-  }
-
-  @Get('pdfTemplate/:id')
-  async printPDFFromTemplate(@Param('id') id: string, @Res() res: Response) {
-    const buffer = await this.usersService.printPDFFromTemplate(+id);
-    res.set({
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename=example.pdf',
-      'Content-Length': buffer.length,
-    });
-
-    res.end(buffer);
   }
 }

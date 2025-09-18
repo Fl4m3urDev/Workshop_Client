@@ -6,8 +6,8 @@ import { CreateArticleTagDto } from './dto/create-articletag.dto';
 export class ArticleTagsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateArticleTagDto) {
-    return this.prisma.articleTags.create({ data });
+  create(createArticleTagDto: CreateArticleTagDto) {
+    return this.prisma.articleTags.create({ data: createArticleTagDto });
   }
 
   findAll() {
@@ -16,16 +16,16 @@ export class ArticleTagsService {
     });
   }
 
-  findByArticle(articleId: number) {
+  findByArticle(article_id: number) {
     return this.prisma.articleTags.findMany({
-      where: { article_id: articleId },
+      where: { article_id: article_id },
       include: { tag: true },
     });
   }
 
-  findByTag(tagId: number) {
+  findByTag(tags_id: number) {
     return this.prisma.articleTags.findMany({
-      where: { tag_id: tagId },
+      where: { tag_id: tags_id },
       include: { article: true },
     });
   }

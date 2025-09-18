@@ -7,8 +7,8 @@ import { UpdateTagDto } from './dto/update-tag.dto';
 export class TagsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateTagDto) {
-    return this.prisma.tags.create({ data });
+  create(createTagDto: CreateTagDto) {
+    return this.prisma.tags.create({ data: createTagDto });
   }
 
   findAll() {
@@ -17,23 +17,18 @@ export class TagsService {
     });
   }
 
-  findOne(id: number) {
+  findOne(tag_id: number) {
     return this.prisma.tags.findUnique({
-      where: { tag_id: id },
+      where: { tag_id: tag_id },
       include: { articles: true },
     });
   }
 
-  update(id: number, data: UpdateTagDto) {
-    return this.prisma.tags.update({
-      where: { tag_id: id },
-      data,
-    });
+  update(tag_id: number, updateTagDto: UpdateTagDto) {
+    return this.prisma.tags.update({ where: { tag_id }, data: updateTagDto });
   }
 
-  remove(id: number) {
-    return this.prisma.tags.delete({
-      where: { tag_id: id },
-    });
+  remove(tag_id: number) {
+    return this.prisma.tags.delete({ where: { tag_id } });
   }
 }
