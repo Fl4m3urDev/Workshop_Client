@@ -1,0 +1,23 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/workshop/node_modules
+/workshop/.pnp
+/workshop/.pnp.js
+
+# testing
+/workshop/coverage
+
+# production
+/workshop/build
+
+# misc
+/workshop/.DS_Store
+/workshop/.env.local
+/workshop/.env.development.local
+/workshop/.env.test.local
+/workshop/.env.production.local
+
+/workshop/npm-debug.log*
+/workshop/yarn-debug.log*
+/workshop/yarn-error.log*
