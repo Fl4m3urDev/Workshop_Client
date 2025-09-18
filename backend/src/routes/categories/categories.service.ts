@@ -1,23 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma.service';
-import { CreateCategoryDto } from './dto/create-categorie.dto';
-import { UpdateCategoryDto } from './dto/update-categorie.dto';
-import { Categories as PrismaCategory } from '@prisma/client';
+import { CreateCategoriesDto } from './dto/create-categorie.dto';
+import { UpdateCategoriesDto } from './dto/update-categorie.dto';
 
 @Injectable()
 export class CategoriesService {
   constructor(private readonly prisma: PrismaService) {}
 
-  create(createCategoryDto: CreateCategoryDto): Promise<PrismaCategory> {
-    return this.prisma.categories.create({ data: createCategoryDto as any });
+  create(createCategoriesDto: CreateCategoriesDto) {
+    return this.prisma.categories.create({ data: createCategoriesDto });
   }
 
-  findAll(): Promise<PrismaCategory[]> {
+  findAll() {
     return this.prisma.categories.findMany();
   }
 
-  /** Shuffle (Fisher–Yates) — utile si tu veux renvoyer aléatoire */
-  async findAllShuffle(): Promise<PrismaCategory[]> {
+  /** Shuffle (Fisher–Yates) — utile si on veut renvoyer aléatoire */
+  async findAllShuffle() {
     const items = await this.prisma.categories.findMany();
     for (let i = items.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -26,18 +25,18 @@ export class CategoriesService {
     return items;
   }
 
-  findOne(category_id: number): Promise<PrismaCategory | null> {
+  findOne(category_id: number) {
     return this.prisma.categories.findUnique({ where: { category_id } });
   }
 
-  async update(category_id: number, updateCategoryDto: UpdateCategoryDto): Promise<PrismaCategory> {
-    // Optionnel : vérifier existence
+  async update(category_id: number, updateCategoriesDto: UpdateCategoriesDto) {
+    // Optionnel : vérifie l'existence
     const existing = await this.prisma.categories.findUnique({ where: { category_id } });
     if (!existing) throw new NotFoundException('Category not found');
-    return this.prisma.categories.update({ where: { category_id }, data: updateCategoryDto as any });
+    return this.prisma.categories.update({ where: { category_id }, data: updateCategoriesDto });
   }
 
-  async remove(category_id: number): Promise<PrismaCategory> {
+  async remove(category_id: number) {
     const existing = await this.prisma.categories.findUnique({ where: { category_id } });
     if (!existing) throw new NotFoundException('Category not found');
     return this.prisma.categories.delete({ where: { category_id } });

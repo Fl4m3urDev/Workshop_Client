@@ -7,8 +7,8 @@ import { UpdateUserActionDto } from './dto/update-useraction.dto';
 export class UserActionsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateUserActionDto) {
-    return this.prisma.userActions.create({ data });
+  create(createUserActionDto: CreateUserActionDto) {
+    return this.prisma.userActions.create({ data: createUserActionDto });
   }
 
   findAll() {

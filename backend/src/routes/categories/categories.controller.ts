@@ -1,8 +1,8 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from './dto/create-categorie.dto';
-import { UpdateCategoryDto } from './dto/update-categorie.dto';
+import { CreateCategoriesDto } from './dto/create-categorie.dto';
+import { UpdateCategoriesDto } from './dto/update-categorie.dto';
 import { Category } from './entities/categorie.entity';
 
 @ApiTags('categories')
@@ -12,7 +12,7 @@ export class CategoriesController {
 
   @Post()
   @ApiOkResponse({ type: Category })
-  create(@Body() createCategoryDto: CreateCategoryDto) {
+  create(@Body() createCategoryDto: CreateCategoriesDto) {
     return this.categoriesService.create(createCategoryDto);
   }
 
@@ -30,7 +30,7 @@ export class CategoriesController {
 
   @Patch(':category_id')
   @ApiOkResponse({ type: Category })
-  update(@Param('category_id') category_id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  update(@Param('category_id') category_id: string, @Body() updateCategoryDto: UpdateCategoriesDto) {
     return this.categoriesService.update(+category_id, updateCategoryDto);
   }
 

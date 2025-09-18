@@ -7,8 +7,8 @@ import { UpdateUserInterestDto } from './dto/update-userinterest.dto';
 export class UserInterestsService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateUserInterestDto) {
-    return this.prisma.userInterests.create({ data });
+  create(createUserInterestDto: CreateUserInterestDto) {
+    return this.prisma.userInterests.create({ data: createUserInterestDto });
   }
 
   findAll() {
