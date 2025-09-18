@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Session as SessionExpress } from 'express-session';
-import { UnauthorizedException, ConflictException, BadRequestException } from '@nestjs/common';
+import { UnauthorizedException, ConflictException, BadRequestException, InternalServerErrorException } from '@nestjs/common';
 import { Roles } from '../../guards/is-authorized/roles';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigService } from '@nestjs/config';
@@ -15,15 +15,45 @@ export class UsersService {
     private readonly mailerService: MailerService,
     private readonly prisma: PrismaService,
     private readonly configService: ConfigService
-  ) {}
+  ) { }
 
-  create(createCatDto: CreateUserDto) {
-    return this.prisma.users.create({ data: createCatDto });
+  create(createUserDto: CreateUserDto) {
+    return this.prisma.users.create({ data: createUserDto });
   }
 
-  login(session: SessionExpress) {
-    session.user = { isLogged: true, role: Roles.Admin };
-    return session.user;
+  async login(session: SessionExpress, email: string, password: string) {
+    // 1. Vérification de l'existence de l'utilisateur
+    const user = await this.prisma.users.findUnique({ where: { email } });
+    if (!user) {
+      throw new UnauthorizedException('Utilisateur introuvable');
+    }
+
+    // 2. Vérification du mot de passe
+    const isPasswordValid = await Utils.crypto.hash(password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Mot de passe incorrect');
+    }
+
+    // 3. Mise en session uniquement des infos nécessaires
+    session.user = {
+      isLogged: true,
+      id: user.user_id,
+      email: user.email,
+      role: Roles.Admin
+    };
+
+    // 4. Retourne des infos filtrées (jamais le mot de passe)
+    return {
+      id: user.user_id,
+      email: user.email,
+      role: Roles.Admin,
+    };
+  }
+
+  logout(session: SessionExpress) {
+    session.destroy((err) => {
+      if (err) throw new InternalServerErrorException('Erreur lors de la déconnexion');
+    });
   }
 
   findAll() {
@@ -40,10 +70,6 @@ export class UsersService {
     });
     return data;
   }
-
-  // admin() {
-  //   return { msg: 'Hello Workshop_Client Admin !', production: this.configService.get('production') };
-  // }
 
   async crypto() {
     const rawData = 'iAmATestString';

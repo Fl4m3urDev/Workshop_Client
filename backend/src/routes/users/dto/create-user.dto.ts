@@ -19,6 +19,11 @@ export class CreateUserDto {
   @MaxLength(150)
   email?: string;
 
+  @ApiPropertyOptional({ example: 'jeanjean', maxLength: 150 })
+  @IsString()
+  @MaxLength(150)
+  password: string;
+
   @ApiPropertyOptional({ enum: SubscriptionType, example: SubscriptionType.FREE })
   @IsOptional()
   @IsEnum(SubscriptionType)
