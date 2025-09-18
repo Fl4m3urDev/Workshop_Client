@@ -3,11 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { configuration } from './configs/configuration';
-import { CatsModule } from './routes/cats/cats.module';
+import { UsersModule } from './routes/users/users.module';
+import { CategoriesModule } from './routes/categories/categories.module';
+import { ArticlesModule } from './routes/articles/articles.module';
 
 @Module({
   imports: [
-    CatsModule,
+    UsersModule,
+    CategoriesModule,
+    ArticlesModule,
     ConfigModule.forRoot({ load: [configuration], ignoreEnvFile: true, isGlobal: true }),
     MailerModule.forRootAsync({
       imports: [ConfigModule],
