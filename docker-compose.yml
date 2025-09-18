@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: projetdb
+      MYSQL_USER: projetuser
+      MYSQL_PASSWORD: projetpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend.dockerfile
+    container_name: nest_backend
+    restart: always
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_USER: projetuser
+      DATABASE_PASSWORD: projetpass
+      DATABASE_NAME: projetdb
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - mysql
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend.dockerfile
+    container_name: react_frontend
+    restart: always
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+volumes:
+  mysql_data:
