@@ -19,7 +19,7 @@ const HomePage = ({ userData, updateUserData, toggleLike }) => {
     },
     badge: 'Recommandé pour vous'
   };
-
+  
   const articlesData = {
     'pour-vous': [
       {
@@ -128,6 +128,26 @@ const HomePage = ({ userData, updateUserData, toggleLike }) => {
     }, 2000);
   };
 
+  const toggleDislike = (articleId) => {
+    // Ici tu peux garder un Set pour les dislikes comme pour les likes
+    const newDislikes = new Set(userData.articleDislikes || []);
+    const isDisliked = newDislikes.has(articleId);
+
+    if (isDisliked) {
+      newDislikes.delete(articleId);
+      updateUserData({
+        articleDislikes: newDislikes,
+        stats: { ...userData.stats, articlesShared: userData.stats.articlesShared - 1 } // exemple
+      });
+    } else {
+      newDislikes.add(articleId);
+      updateUserData({
+        articleDislikes: newDislikes,
+        stats: { ...userData.stats, articlesShared: userData.stats.articlesShared + 1 }
+      });
+    }
+  };
+
   return (
     <div className="container">
       <main className="main-content">
@@ -190,11 +210,19 @@ const HomePage = ({ userData, updateUserData, toggleLike }) => {
               />
               <section className="articles-grid">
                 {articlesData['actualites'].map((article) => (
+                  // <ArticleCard
+                  //   key={article.id}
+                  //   article={article}
+                  //   onLike={handleLikeToggle}
+                  //   isLiked={userData.articleLikes.has(article.id)}
+                  // />
                   <ArticleCard
                     key={article.id}
                     article={article}
-                    onLike={handleLikeToggle}
+                    onLike={toggleLike}
+                    onDislike={toggleDislike}
                     isLiked={userData.articleLikes.has(article.id)}
+                    isDisliked={userData.articleDislikes?.has(article.id)}
                   />
                 ))}
               </section>
