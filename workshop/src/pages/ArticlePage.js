@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const ArticlePage = ({ articles }) => {
+const ArticlePage = ( articles ) => {
   const { id } = useParams();
 
   // Cherche l’article par son id dans les données
