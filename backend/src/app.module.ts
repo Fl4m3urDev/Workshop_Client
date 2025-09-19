@@ -6,12 +6,20 @@ import { configuration } from './configs/configuration';
 import { UsersModule } from './routes/users/users.module';
 import { CategoriesModule } from './routes/categories/categories.module';
 import { ArticlesModule } from './routes/articles/articles.module';
+import { UserInterestsModule } from './routes/userinterests/userinterests.module';
+import { UserActionsModule } from './routes/useractions/useractions.module';
+import { TagsModule } from './routes/tags/tags.module';
+import { ArticleTagsModule } from './routes/articletags/articletags.module';
 
 @Module({
   imports: [
     UsersModule,
     CategoriesModule,
     ArticlesModule,
+    UserInterestsModule,
+    UserActionsModule,
+    TagsModule,
+    ArticleTagsModule,
     ConfigModule.forRoot({ load: [configuration], ignoreEnvFile: true, isGlobal: true }),
     MailerModule.forRootAsync({
       imports: [ConfigModule],

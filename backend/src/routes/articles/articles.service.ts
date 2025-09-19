@@ -7,8 +7,8 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 export class ArticlesService {
   constructor(private prisma: PrismaService) {}
 
-  create(data: CreateArticleDto) {
-    return this.prisma.articles.create({ data });
+  create(createArticleDto: CreateArticleDto) {
+    return this.prisma.articles.create({ data: createArticleDto });
   }
 
   findAll() {
@@ -17,23 +17,23 @@ export class ArticlesService {
     });
   }
 
-  findOne(id: number) {
+  findOne(article_id: number) {
     return this.prisma.articles.findUnique({
-      where: { article_id: id },
+      where: { article_id: article_id },
       include: { category: true, tags: true },
     });
   }
 
-  update(id: number, data: UpdateArticleDto) {
+  update(article_id: number, data: UpdateArticleDto) {
     return this.prisma.articles.update({
-      where: { article_id: id },
+      where: { article_id: article_id },
       data,
     });
   }
 
-  remove(id: number) {
+  remove(article_id: number) {
     return this.prisma.articles.delete({
-      where: { article_id: id },
+      where: { article_id: article_id },
     });
   }
 }

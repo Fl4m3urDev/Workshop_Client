@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserInterestsController } from './userinterests.controller';
-import { UserInterestsService } from './userinterests.service';
+import { TagsController } from './tags.controller';
+import { TagsService } from './tags.service';
 
-describe('UserInterestsController', () => {
-  let controller: UserInterestsController;
-  let service: UserInterestsService;
+describe('TagsController', () => {
+  let controller: TagsController;
+  let service: TagsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UserInterestsController],
+      controllers: [TagsController],
       providers: [
         {
-          provide: UserInterestsService,
+          provide: TagsService,
           useValue: {
             create: jest.fn(),
             findAll: jest.fn(),
@@ -23,8 +23,8 @@ describe('UserInterestsController', () => {
       ],
     }).compile();
 
-    controller = module.get<UserInterestsController>(UserInterestsController);
-    service = module.get<UserInterestsService>(UserInterestsService);
+    controller = module.get<TagsController>(TagsController);
+    service = module.get<TagsService>(TagsService);
   });
 
   it('should be defined', () => {
@@ -32,7 +32,7 @@ describe('UserInterestsController', () => {
   });
 
   it('create should call service.create', async () => {
-    const dto = { user_id: 1, category_id: 2 };
+    const dto = { name: 'Culture' };
     await controller.create(dto);
     expect(service.create).toHaveBeenCalledWith(dto);
   });

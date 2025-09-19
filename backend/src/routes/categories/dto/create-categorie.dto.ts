@@ -1,7 +1,7 @@
 import { IsString, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateCategoryDto {
+export class CreateCategoriesDto {
   @ApiProperty({ example: 'Sport', maxLength: 100 })
   @IsString()
   @MaxLength(100)
