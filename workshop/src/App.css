@@ -106,6 +106,20 @@ body {
   color: #fbbf24;
 }
 
+/* navigation */
+.connexion-btn{
+  background-color: #010c22; /* Green */
+  border: none;
+  color: white;
+  padding: 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}
 /* User Profile */
 .user-profile {
   display: flex;
@@ -795,4 +809,299 @@ body {
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   z-index: 3000;
   animation: slideIn 0.3s ease-out;
+}
+
+/* ============================ */
+/* Enregistrement */
+/* Conteneur principal */
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Carte du formulaire */
+.register-form {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Titre */
+.register-form h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Groupes de champs */
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #444;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+  outline: none;
+}
+
+/* Erreurs */
+.input-error {
+  border-color: #dc2626 !important;
+}
+
+.error-text {
+  font-size: 0.8rem;
+  color: #dc2626;
+  margin-top: 5px;
+}
+
+.error-box {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+/* Bouton */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #4338ca;
+}
+
+.submit-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Pied de formulaire */
+.form-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 18px;
+}
+
+.form-footer a {
+  color: #4f46e5;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* connexion */
+/* Conteneur principal */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Carte du formulaire */
+.login-form {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Titre */
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Groupes de champs */
+.form-group {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: #444;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.form-group input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
+  outline: none;
+}
+
+/* Affichage/masquage mot de passe */
+.password-wrapper {
+  position: relative;
+}
+
+.show-password-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  color: #4f46e5;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* Erreurs */
+.input-error {
+  border-color: #dc2626 !important;
+}
+
+.error-text {
+  font-size: 0.8rem;
+  color: #dc2626;
+  margin-top: 5px;
+}
+
+.error-box {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+}
+
+/* Options du formulaire */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.forgot-link {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Bouton */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: #4f46e5;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #4338ca;
+}
+
+.submit-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Pied de formulaire */
+.form-footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 18px;
+}
+
+.form-footer a {
+  color: #4f46e5;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+
+/* button cartes */
+.reaction-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+}
+.reaction-buttons button {
+  background-color: none;
+  border: none;
 }
