@@ -164,3 +164,123 @@ CREATE TABLE `users` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2025-09-18 11:13:54
+
+-- ===============================
+-- Jeux d’essais pour recommandation
+-- ===============================
+
+-- Catégories
+INSERT INTO categories (name) VALUES
+('Technologie'),
+('Santé'),
+('Voyage'),
+('Économie'),
+('Sport'),
+('Musique'),
+('Cinéma'),
+('Cuisine'),
+('Histoire'),
+('Nature');
+
+-- Tags
+INSERT INTO tags (name) VALUES
+('Intelligence Artificielle'),
+('Machine Learning'),
+('Innovation'),
+('Fitness'),
+('Nutrition'),
+('Aventure'),
+('Investissement'),
+('Football'),
+('Rock'),
+('Film'),
+('Recette'),
+('Seconde Guerre Mondiale'),
+('Animaux');
+
+-- Utilisateurs
+INSERT INTO users (username, email, subscription_type) VALUES
+('alice', 'alice@example.com', 'subscriber'),
+('bob', 'bob@example.com', 'free'),
+('charlie', 'charlie@example.com', 'subscriber'),
+('diana', 'diana@example.com', 'free'),
+('eve', 'eve@example.com', 'subscriber');
+
+-- ===============================
+-- Articles (10 articles)
+-- ===============================
+
+-- Cluster cohérent (Technologie + IA)
+INSERT INTO articles (title, content, author, category_id, highlighted, views_count, likes_count) VALUES
+('Introduction à l’IA', 'Article sur les bases de l’IA...', 'Alice Martin', 1, 1, 100, 30),
+('Deep Learning expliqué', 'Contenu sur le deep learning...', 'Bob Dupont', 1, 0, 120, 40),
+('Les tendances en Machine Learning', 'Analyse des tendances ML...', 'Charlie Durand', 1, 0, 80, 25),
+('Applications de l’IA en santé', 'IA et médecine...', 'Diana Petit', 1, 1, 90, 35),
+('IA et futur du travail', 'Impact de l’IA sur l’emploi...', 'Eve Moreau', 1, 0, 110, 50);
+
+-- Articles indépendants (catégories / tags différents)
+INSERT INTO articles (title, content, author, category_id, highlighted, views_count, likes_count) VALUES
+('Les bienfaits du yoga', 'Article sur la relaxation...', 'Alice Martin', 2, 0, 70, 20),
+('Les meilleures destinations en Europe', 'Voyages à faire...', 'Bob Dupont', 3, 0, 150, 60),
+('Comment investir en bourse', 'Conseils financiers...', 'Charlie Durand', 4, 1, 90, 25),
+('La Coupe du monde de football', 'Analyse des matchs...', 'Diana Petit', 5, 1, 200, 100),
+('L’histoire du rock', 'Évolution du rock...', 'Eve Moreau', 6, 0, 50, 10);
+
+-- ===============================
+-- Tags des articles
+-- ===============================
+
+-- Cluster cohérent (articles 1 à 5 → IA)
+INSERT INTO articletags (article_id, tag_id) VALUES
+(1, 1), (1, 3),
+(2, 1), (2, 2),
+(3, 2), (3, 3),
+(4, 1), (4, 4),
+(5, 1), (5, 2), (5, 3);
+
+-- Articles indépendants
+INSERT INTO articletags (article_id, tag_id) VALUES
+(6, 4), (6, 5),          -- Yoga → Fitness, Nutrition
+(7, 6),                  -- Voyage → Aventure
+(8, 7),                  -- Bourse → Investissement
+(9, 8),                  -- Sport → Football
+(10, 9);                 -- Musique → Rock
+
+-- ===============================
+-- Intérêts des utilisateurs
+-- ===============================
+INSERT INTO userinterests (user_id, category_id) VALUES
+(1, 1), (1, 2),   -- Alice aime Technologie & Santé
+(2, 3),           -- Bob aime Voyage
+(3, 1), (3, 4),   -- Charlie aime Technologie & Économie
+(4, 5),           -- Diana aime Sport
+(5, 6);           -- Eve aime Musique
+
+-- ===============================
+-- UserActions (weights: view=1, like=3, dislike=-2)
+-- ===============================
+
+INSERT INTO useractions (user_id, article_id, action_type) VALUES
+-- Alice lit et aime beaucoup le cluster IA
+(1, 1, 'view'), (1, 1, 'like'),
+(1, 2, 'like'),
+(1, 3, 'view'),
+(1, 5, 'like'),
+
+-- Bob préfère les voyages
+(2, 7, 'view'), (2, 7, 'like'),
+(2, 3, 'view'),
+
+-- Charlie s’intéresse à IA + finance
+(3, 1, 'view'),
+(3, 4, 'like'),
+(3, 8, 'like'),
+
+-- Diana suit surtout le sport
+(4, 9, 'view'), (4, 9, 'like'),
+(4, 5, 'dislike'), -- pas fan d’IA appliquée au travail
+
+-- Eve s’intéresse à la musique et un peu à la techno
+(5, 10, 'like'),
+(5, 2, 'view');
+
